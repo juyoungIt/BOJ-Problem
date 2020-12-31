@@ -1,3 +1,8 @@
+/*
+Q. 2562 Solution Source Code
+Writer : JuyoungIt
+*/
+
 #include <stdio.h>
 
 int main()
