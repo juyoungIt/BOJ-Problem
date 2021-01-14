@@ -46,7 +46,7 @@ int validCheck(char* str, int len)
 
     for(int i=0 ; i<len ; i++) {
         tmp = str[i]; // 문자 1개를 읽어옴
-        if(!((tmp<=97 && tmp>=122) || tmp == '-' || tmp == '='))
+        if(!((tmp>=97 && tmp<=122) || tmp == '-' || tmp == '='))
             return FALSE;
     }
     return TRUE;
@@ -56,6 +56,7 @@ int alCount(char* str, int len)
 {
     int result = 0; // 카운트된 크로아티아 알파벳의 수
     int special = FALSE; // 특수문자를 읽는 중인지에 대한 여부
+    char biprev = -1; // 이전이전 문자를 임시저장
     char prev = -1; // 이전 문자를 임시저장
     char cur; // 문자 1개를 임시저장
 
@@ -63,13 +64,25 @@ int alCount(char* str, int len)
         cur = str[i]; // 1개의 문자를 가져옴
         // 특수한 경우를 제외한 일반적인 1자의 알파벳인 경우
         if(specialChar(cur) == FALSE) {
-            
+            if(special == FALSE)
+                result++;
+            else {
+                special = FALSE;
+                if(biprev == 'b' && prev == 'z') result += 3;
+                else result += 2;
+            }
         }
         // 특수한 경우인 2자 또는 3자 알파벳을 구성하는 알파벳인 경우
         else {
-
+            special = TRUE;
+            if((prev == 'c' && cur == '=') || (prev == 'c' && cur == '-')) result++;
+            else if(prev == 'd' && cur == '-') result++;
+            else if((prev == 'l' && cur == 'j') || (prev == 'n' && cur == 'j')) result++;
+            else if((prev == 's' && cur == '=') || (prev == 'z' && cur == '=')) result++;
+            else if(biprev == 'b' && prev == 'z' && cur == '=') result++;
         }
-        prev = cur; // 현재 문자를 백업
+        biprev = prev; // 이전 문자를 백업
+        prev = cur;    // 현재 문자를 백업
     }
     return result;
 }
