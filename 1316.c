@@ -56,7 +56,7 @@ int main()
                 return -4;
             }
         }
-        wordCase[i] = (char*)malloc(sizeof(char)*len); // 단어를 저장할 char형 배열공간 할당
+        wordCase[i] = (char*)malloc(sizeof(char)*(len+1)); // 단어를 저장할 char형 배열공간 할당
         strcpy(wordCase[i], tmpStr); // 단어 입력
         curCount++; // 현재 입력된 단어의 수를 1증가
     }
