@@ -94,9 +94,16 @@ int alCount(char* str, int len)
             else {
                 // 특수문자를 시작하는 문자인 경우
                 if(isStart(cur)) {
-                    // 이전문자가 d, 현재문자가 z가 아닌 경우
-                    if(!(prev == 'd' && cur == 'z')) {
+                    // 현재 문자가 마지막 문자인 경우
+                    if(i+1 == len) {
                         count++; // 알파벳 수 1증가
+                    }
+                    // 현재 문자가 마지막 문자가 아닌 경우
+                    else {
+                        // 이전문자가 d, 현재문자가 z가 아닌 경우
+                        if(!(prev == 'd' && cur == 'z')) {
+                            count++; // 알파벳 수 1증가
+                        }
                     }
                 }
                 // 특수문자를 시작하는 문자가 아닌 경우
@@ -110,7 +117,13 @@ int alCount(char* str, int len)
         else {
             // 특수문자를 시작하는 문자인 경우
             if(isStart(cur)) {
-                special = TRUE; // 특수문자 리딩상태 업데이트
+                // 현재 문자가 마지막 문자인 경우
+                if(i+1 == len) {
+                    count++; // 알파벳의 수 1증가
+                }
+                else {
+                    special = TRUE; // 특수문자 리딩상태 업데이트
+                }
             }
             // 특수문자를 시작하는 문자가 아닌 경우
             else {
