@@ -96,7 +96,14 @@ int alCount(char* str, int len)
                 if(isStart(cur)) {
                     // 현재 문자가 마지막 문자인 경우
                     if(i+1 == len) {
-                        count++; // 알파벳 수 1증가
+                        // 이전문자가 d, 현재문자가 z인 경우
+                        if(prev == 'd' && cur == 'z') {
+                            count += 2;
+                        }
+                        // 그 이외의 경우
+                        else {
+                            count++; // 알파벳 수 1증가
+                        }
                     }
                     // 현재 문자가 마지막 문자가 아닌 경우
                     else {
