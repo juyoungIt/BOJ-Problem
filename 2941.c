@@ -12,8 +12,6 @@
 // 함수 선언부
 int validCheck(char* str, int len); // 입력 문자열의 유효성 검사
 int alCount(char* str, int len);    // 문자열에 존재하는 크로아티아 문자수 카운트
-int isStart(char c); // 입력문자가 특수문자를 시작하는 문자인지 판별
-int isEnd(char c); // 입력문자가 특수문자를 마무리하는 문자인지 판별
 
 int main()
 {
@@ -54,106 +52,46 @@ int validCheck(char* str, int len)
 
 int alCount(char* str, int len)
 {
-    char cur; // 현재 조회하는 문자
-    char prev; // 이전에 조회한 문자
-    char special = FALSE; // 특수문자 리딩상태 여부
-    int count = 0; // 문자열에 존재하는 알파벳 카운트의 수
+    int result = 0; // 크로아티아 알파벳의 수
 
     for(int i=0 ; i<len ; i++) {
-        cur = str[i]; // 문자 1개 로딩
-        // 특수문자를 읽고 있는 상황인 경우
-        if(special == TRUE) {
-            // 특수문자를 마무리하는 문자인 경우
-            if(isEnd(cur)) {
-                // 현재 문자가 '-'인 경우
-                if(cur == '-') {
-                    // 이전문자가 'c' 또는 'd'
-                    if(prev == 'c' || prev == 'd') {
-                        count++; // 알파벳 수 1증가
-                        special = FALSE; // 특수문자 리딩상태 업데이트
-                    }
-                }
-                // 현재 문자가 '='인 경우
-                else if(cur == '=') {
-                    // 이전 문자가 'c' 또는 'z' 또는 's'인 경우
-                    if(prev == 'c' || prev == 'z' || prev == 's') {
-                        count++; // 알파벳 수 1증가
-                        special = FALSE; // 특수문자 리딩상태 업데이트
-                    }
-                }
-                // 현재 문자가 'j'인 경우
-                else if(cur == 'j') {
-                    // 이전 문자가 'l' 또는 'n'인 경우
-                    if(prev == 'l' || prev == 'n') {
-                        count++; // 알파벳 수 1증가
-                        special = FALSE; // 특수문자 리딩상태 업데이트
-                    }
-                }
-            }
-            // 특수문자를 마무리하는 문자가 아닌 경우
-            else {
-                // 특수문자를 시작하는 문자인 경우
-                if(isStart(cur)) {
-                    // 현재 문자가 마지막 문자인 경우
-                    if(i+1 == len) {
-                        // 이전문자가 d, 현재문자가 z인 경우
-                        if(prev == 'd' && cur == 'z') {
-                            count += 2;
-                        }
-                        // 그 이외의 경우
-                        else {
-                            count++; // 알파벳 수 1증가
-                        }
-                    }
-                    // 현재 문자가 마지막 문자가 아닌 경우
-                    else {
-                        // 이전문자가 d, 현재문자가 z가 아닌 경우
-                        if(!(prev == 'd' && cur == 'z')) {
-                            count++; // 알파벳 수 1증가
-                        }
-                    }
-                }
-                // 특수문자를 시작하는 문자가 아닌 경우
-                else {
-                    count += 2; // 알파벳 수 2증가
-                    special = FALSE; // 특수문자 리딩 상태 업데이트
-                }
-            }
+        // 'c=' 문자를 만난 경우
+        if(str[i] == 'c' && str[i+1] == '=') {
+            result++;
+            i++; // 다음 인덱스로 넘어감
         }
-        // 특수문자를 리딩하는 상황이 아닌 경우
-        else {
-            // 특수문자를 시작하는 문자인 경우
-            if(isStart(cur)) {
-                // 현재 문자가 마지막 문자인 경우
-                if(i+1 == len) {
-                    count++; // 알파벳의 수 1증가
-                }
-                else {
-                    special = TRUE; // 특수문자 리딩상태 업데이트
-                }
-            }
-            // 특수문자를 시작하는 문자가 아닌 경우
-            else {
-                count++; // 알파벳의 수 1증가
-            }
+        // 'c-' 문자를 만난 경우
+        else if(str[i] == 'c' && str[i+1] == '-') {
+            result++;
+            i++; // 다음 인덱스로 넘어감
         }
-        prev = cur; // 현재 조회 중인 문자를 백업
+        // 'dz=' 문자를 만난 경우
+        else if(str[i] == 'd' && str[i+1] == 'z' && str[i+2] == '=') {
+            result++;
+            i += 2; // 다음 단어가 위치한 인덱스로 넘어감
+        }
+        // 'd-' 문자를 만난 경우
+        else if(str[i] == 'd' && str[i+1] == '-') {
+            result++;
+            i++; // 다음 인덱스로 넘어감
+        }
+        // 'lj' 문자를 만난 경우
+        else if(str[i] == 'l' && str[i+1] == 'j') {
+            result++;
+            i++; // 다음 인덱스로 넘어감
+        }
+        // 'nj' 문자를 만난 경우
+        else if(str[i] == 'n' && str[i+1] == 'j') {
+            result++;
+            i++; // 다음 인덱스로 넘어감
+        }
+        // 's=' 문자를 만난 경우
+        else if(str[i] == 's' && str[i+1] == '=') {
+            result++;
+            i++; // 다음 인덱스로 넘어감
+        }
+        // 그 외의 일반 알파벳인 경우
+        else if(str[i]>=97 && str[i]<=122) result++;
     }
-    return count; // 산출한 카운트 결과 반환
-}
-
-int isStart(char c)
-{
-    if(c == 'c' || c == 'd' || c == 'l' || c == 'n' || c == 's' || c == 'z')
-        return TRUE;
-    else
-        return FALSE;
-}
-
-int isEnd(char c)
-{
-    if(c == '-' || c == '=' || c == 'j')
-        return TRUE;
-    else
-        return FALSE;
+    return result;
 }
