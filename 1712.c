@@ -57,11 +57,7 @@ int findPoint(int a, int b, int c)
     // 손익분기점이 발생할 수 없는 조합인 경우
     if(b >= c)
         return -1;
-
     // 손익분기점을 계산
-    while(1) {
-        if((a+(b*i)) < (c*i)) break;
-        i++;
-    }
-    return i;
+    else
+        return a/(c-b)+1;
 }
