@@ -4,16 +4,25 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
 
 // declaration of function
 void drawStar(int n); // draw 'N' pattern star
 
 int main()
 {
-    int size; // pattern size
+    int n;    // pattern size
+    char** grid; // grid for pattern drawing
 
-    scanf("%d", &size); // input pattern size
-    drawStar(size);     // draw 'N' pattern star
+    scanf("%d", &n); // input pattern size
+    grid = (char**)malloc(sizeof(char*)*n);
+    for(int i=0 ; i<n ; i++)
+        grid[i] = (char*)malloc(sizeof(char)*n);
+
+    for(int i=0 ; i<n ; i++)
+        free(grid[i]);
+    free(grid);
+
     return 0;
 }
 
