@@ -7,7 +7,8 @@
 #include <stdlib.h>
 
 // declaration of function
-void drawStar(int n); // draw 'N' pattern star
+void drawStar(int x, int y, int n); // draw star in (x, y) location
+void drawSpace(int x, int y, int n); // draw space in (x, y) location
 
 int main()
 {
@@ -27,7 +28,13 @@ int main()
 }
 
 // definition of function
-void drawStar(int n)
+void drawStar(int x, int y, int n)
+{
+    // base case
+    // general case
+}
+
+void drawSpace(int x, int y, int n)
 {
     // base case
     // general case
