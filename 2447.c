@@ -7,8 +7,8 @@
 #include <stdlib.h>
 
 // declaration of function
-void drawStar(int x, int y, int n); // draw star in (x, y) location
-void drawSpace(int x, int y, int n); // draw space in (x, y) location
+void drawPattern(char** g, int x, int y, int n); // draw star in (x, y) location
+void drawSpace(char** g, int x, int y, int n); // draw space in (x, y) location
 
 int main()
 {
@@ -20,6 +20,15 @@ int main()
     for(int i=0 ; i<n ; i++)
         grid[i] = (char*)malloc(sizeof(char)*n);
 
+    drawPattern(grid, 0, 0, n);
+
+    for(int i=0 ; i<n ; i++) {
+        for(int j=0 ; j<n ; j++) {
+            printf("%c", grid[i][j]);
+        }
+        printf("\n");
+    }
+
     for(int i=0 ; i<n ; i++)
         free(grid[i]);
     free(grid);
@@ -28,14 +37,36 @@ int main()
 }
 
 // definition of function
-void drawStar(int x, int y, int n)
+void drawPattern(char** g, int x, int y, int n)
 {
-    // base case
-    // general case
+    if(n == 3) {
+        for(int i=0 ; i<3 ; i++) {
+            for(int j=0 ; j<3 ; j++) {
+                if(i == 1 && j == 1)
+                    drawSpace(g, x+j, y+i, 1);
+                else
+                    g[y+i][x+j] = '*';
+            }
+        }
+    }
+    else {
+        for(int i=0 ; i<3 ; i++) {
+            for(int j=0 ; j<3 ; j++) {
+                if(i == 1 && j == 1)
+                    drawSpace(g, x+n/3, y+n/3, n/3);
+                else
+                    drawPattern(g, x+n/3*j, y+n/3*i, n/3);
+            }
+        }
+    }
 }
 
-void drawSpace(int x, int y, int n)
+// draw NxN size space rectangle from (x,y)
+void drawSpace(char** g, int x, int y, int n)
 {
-    // base case
-    // general case
+    for(int i=0 ; i<n ; i++) {
+        for(int j=0 ; j<n ; j++) {
+            g[y+i][x+j] = ' ';
+        }
+    }
 }
