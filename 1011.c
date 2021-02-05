@@ -16,17 +16,16 @@ int main()
     int* result;     // store solution value of each test case
 
     scanf("%d", &tcNum);
-    // memory allocation
     testCase = (int**)malloc(sizeof(int*) * tcNum);
     result = (int*)malloc(sizeof(int) * tcNum);
     for(int i=0 ; i<tcNum ; i++)
         testCase[i] = (int*)malloc(sizeof(int) * 2);
 
-    // calculate solution of each test case
-    for(int i=0 ; i<tcNum ; i++)
+    for(int i=0 ; i<tcNum ; i++) {
+        scanf("%d %d", &testCase[i][0], &testCase[i][1]);
         result[i] = bestSol(testCase[i][0], testCase[i][1]);
+    }
 
-    // print solution of each test case
     for(int i=0 ; i<tcNum ; i++)
         printf("%d\n", result[i]);
 
@@ -39,9 +38,20 @@ int main()
 
 // function definition
 int bestSol(int x, int y) {
-    int count = 0;
-    /*
-     * Solution Algorithm here...
-     */
+    int count; // execute count
+    int dist = y-x; // distance
+    int n; // the loop variable
+
+    n = 1; // initialize loop variable
+    while(1) {
+        if(n*(n+1) >= dist) {
+            if(n*(n+1)-n < dist)
+                count = n*2;
+            else
+                count = n*2-1;
+            break;
+        }
+        n++;
+    }
     return count;
 }
