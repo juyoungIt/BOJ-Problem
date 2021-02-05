@@ -7,7 +7,7 @@
 #include <stdlib.h>
 
 // function declaration
-int bestSol(int x, int y); // find best solution value of test case
+int bestSol(unsigned int x, unsigned int y); // find best solution value of test case
 
 int main()
 {
@@ -37,12 +37,12 @@ int main()
 }
 
 // function definition
-int bestSol(int x, int y) {
+int bestSol(unsigned int x, unsigned int y) {
     int count; // execute count
-    int dist = y-x; // distance
+    unsigned int dist = y-x; // distance
     int n; // the loop variable
 
-    n = 1; // initialize loop variable
+    n = 1;
     while(1) {
         if(n*(n+1) >= dist) {
             if(n*(n+1)-n < dist)
