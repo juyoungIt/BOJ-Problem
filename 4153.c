@@ -7,15 +7,16 @@
 #include <stdlib.h>
 #include <math.h>
 
-int findMax(int* tc);
+int findMaxIdx(int* tc);
 
 int main()
 {
     int tcNum = 0;
     int** testCase = NULL;
-    int maxLen;
+    int maxLen, maxIdx;
     int len1, len2;
     int count;
+    int num1, num2, num3;
 
     while(1) {
         testCase = (int**)realloc(testCase, sizeof(int*) * (tcNum+1));
@@ -26,29 +27,42 @@ int main()
         tcNum++;
     }
     for(int i=0 ; i<tcNum ; i++) {
-        maxLen = findMax(testCase[i]);
+        maxIdx = findMaxIdx(testCase[i]);
+        maxLen = testCase[i][maxIdx];
         count = 0;
         for(int j=0 ; j<3 ; j++) {
-            if(count == 0 && testCase[i][j] != maxLen)
-                len1 = testCase[i][j];
-            else if(testCase[i][j] != maxLen)
-                len2 = testCase[i][j];
-            count++;
+            if(j != maxIdx) {
+                if(count == 0)
+                    len1 =  testCase[i][j];
+                else
+                    len2 = testCase[i][j];
+                count++;
+            }
         }
-        if(pow(maxLen, 2) == (pow(len1, 2) + pow(len2, 2)))
+        num1 = (int)pow(maxLen, 2);
+        num2 = (int)pow(len1, 2);
+        num3 = (int)pow(len2, 2);
+        if(num1 == num2 + num3)
             printf("right\n");
         else
             printf("wrong\n");
     }
+    for(int i=0 ; i<tcNum ; i++)
+        free(testCase[i]);
+    free(testCase);
+
     return 0;
 }
 
-int findMax(int* tc)
+int findMaxIdx(int* tc)
 {
     int max = tc[0];
+    int maxIdx;
     for(int i=0 ; i<3 ; i++) {
-        if(max < tc[i])
+        if(max < tc[i]) {
             max = tc[i];
+            maxIdx = i;
+        }
     }
-    return max;
+    return maxIdx;
 }
