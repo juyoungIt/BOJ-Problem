@@ -10,21 +10,20 @@ int main()
 {
     int min, max; // store M, N value
     int* num;
-    int count;
 
     scanf("%d %d", &min, &max);
-    count = max-min+1;
-    num = (int*)malloc(sizeof(int) * count);
-    for(int i=min ; i<=max ; i++)
+    num = (int*)malloc(sizeof(int) * (max+1));
+    for(int i=2 ; i<=max ; i++)
         num[i] = i;
 
-    /*
-     * Solution Algorithm here...
-     */
-
-    for(int i=0 ; i<count ; i++) {
+    for(int i=2 ; i<=max ; i++) {
         if(num[i] == 0) continue;
-        printf("%d\n", num[i]);
+        for(int j=i+i ; j<=max ; j+=i)
+            num[j] = 0;
     }
+
+    for(int i=min ; i<=max ; i++)
+        if(num[i] != 0) printf("%d\n", num[i]);
+    free(num);
     return 0;
 }
